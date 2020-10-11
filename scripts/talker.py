@@ -39,6 +39,9 @@
 import rospy
 from std_msgs.msg import String
 import sys, select, os
+
+key = 's'
+
 if os.name == 'nt':
     import msvcrt
 else:
@@ -110,9 +113,28 @@ if __name__ == '__main__':
             elif key == ' ' or key == 's' :
                 rospy.loginfo('Stop')
                 pub.publish('s')
+            elif key == '0' :
+                rospy.loginfo('0 : edfpulse_90')
+                pub.publish('0')
+            elif key == '1' :
+                rospy.loginfo('1 : edfpulse_100')
+                pub.publish('1')
+            elif key == '2' :
+                rospy.loginfo('2 : edfpulse_110')
+                pub.publish('2')
+            elif key == '3' :
+                rospy.loginfo('3 : edfpulse_120')
+                pub.publish('3')
+            elif key == '4' :
+                rospy.loginfo('4 : edfpulse_130')
+                pub.publish('4')
+            elif key == '5' :
+                rospy.loginfo('5 : edfpulse_140')
+                pub.publish('5')
                 
             else:
                 if (key == '\x03'):
+                    rospy.loginfo('Exit')
                     break
             
     except rospy.ROSInterruptException:

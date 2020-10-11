@@ -38,22 +38,24 @@
 
 import rospy
 import serial
+import sys, select, os
 from std_msgs.msg import String
+#from goto import goto, comefrom, label
 
-arduino = serial.Serial(port='/dev/ttyACM0',baudrate=57600,)
+arduino = serial.Serial(port='/dev/ttyACM0',baudrate=115200,)
 
 def callback(data):
     rospy.loginfo('key %s', data.data)
     send = data.data
     send = send.encode('utf-8')
     arduino.write(send)
-
-def listener():
-    rospy.init_node('listener', anonymous=True)
-    rospy.Subscriber('chatter', String, callback)
-    get = arduino.read()
-    #rospy.loginfo('d : Right')
-    rospy.spin()
-
+   
 if __name__ == '__main__':
-    listener()
+    while(1):
+        try:
+            rospy.init_node('listener', anonymous=True)
+            rospy.Subscriber('chatter', String, callback)
+            get = arduino.read()
+        except KeyboardInterrupt:
+            sys.exit()
+            break
